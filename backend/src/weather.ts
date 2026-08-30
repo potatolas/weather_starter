@@ -181,10 +181,69 @@ export class SingaporeWeatherClient {
   ) {}
 
   async getCurrentWeather(latitude: number, longitude: number): Promise<WeatherSnapshot> {
-    const forecastPayload = await this.fetchLatestForecastPayload().catch(() => null);
-    return forecastPayload
-      ? this.snapshotFromPayload(forecastPayload, latitude, longitude)
-      : this.emptyForecastSnapshot();
+    const forecastPayload = await this.fetchLatestForecastPayload();
+    const snapshot = this.snapshotFromPayload(forecastPayload, latitude, longitude);
+    const [
+      temperature,
+      humidity,
+      rainfall,
+      windSpeed,
+      windDirection,
+      uv,
+      airQuality,
+      dailyForecast,
+      regionalForecast,
+    ] = await Promise.allSettled([
+      this.fetchNearestReading('air-temperature', latitude, longitude),
+      this.fetchNearestReading('relative-humidity', latitude, longitude),
+      this.fetchNearestReading('rainfall', latitude, longitude),
+      this.fetchNearestReading('wind-speed', latitude, longitude),
+      this.fetchNearestReading('wind-direction', latitude, longitude),
+      this.fetchUvIndex(),
+      this.fetchAirQuality(latitude, longitude),
+      this.fetchFourDayForecast(),
+      this.fetchTwentyFourHourForecast(latitude, longitude),
+    ]);
+
+    const temperatureResult = fulfilled(temperature);
+    const humidityResult = fulfilled(humidity);
+    const rainfallResult = fulfilled(rainfall);
+    const windSpeedResult = fulfilled(windSpeed);
+    const windDirectionResult = fulfilled(windDirection);
+    const uvResult = fulfilled(uv);
+    const airQualityResult = fulfilled(airQuality);
+    const dailyForecastResult = fulfilled(dailyForecast);
+    const regionalForecastResult = fulfilled(regionalForecast);
+
+    return {
+      ...snapshot,
+      observed_at:
+        latestTimestamp([
+          snapshot.observed_at,
+          temperatureResult?.timestamp ?? null,
+          humidityResult?.timestamp ?? null,
+          rainfallResult?.timestamp ?? null,
+          windSpeedResult?.timestamp ?? null,
+          windDirectionResult?.timestamp ?? null,
+          uvResult?.timestamp ?? null,
+          airQualityResult?.timestamp ?? null,
+          dailyForecastResult?.timestamp ?? null,
+          regionalForecastResult?.timestamp ?? null,
+        ]) ?? snapshot.observed_at,
+      temperature_c: temperatureResult?.value ?? null,
+      humidity_percent: humidityResult?.value ?? null,
+      rainfall_mm: rainfallResult?.value ?? null,
+      wind_speed_knots: windSpeedResult?.value ?? null,
+      wind_direction_degrees: windDirectionResult?.value ?? null,
+      uv_index: uvResult?.value ?? null,
+      psi_twenty_four_hourly: airQualityResult?.psi ?? null,
+      pm25_one_hourly: airQualityResult?.pm25 ?? null,
+      air_quality_region: airQualityResult?.region ?? null,
+      forecast_low_c: regionalForecastResult?.low ?? null,
+      forecast_high_c: regionalForecastResult?.high ?? null,
+      forecast_periods: regionalForecastResult?.periods ?? [],
+      daily_forecast: dailyForecastResult?.days ?? [],
+    };
   }
 
   async fetchLatestForecastPayload(): Promise<ForecastPayload> {
@@ -557,6 +616,10 @@ function valueForRegion(
 ): number | null {
   if (!values || !region) return null;
   return numberOrNull(values[region]);
+}
+
+function fulfilled<T>(result: PromiseSettledResult<T>): T | null {
+  return result.status === 'fulfilled' ? result.value : null;
 }
 
 

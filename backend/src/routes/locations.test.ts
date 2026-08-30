@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import request from 'supertest';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { WeatherSnapshot } from '../weather.js';
+import { SingaporeWeatherClient } from '../weather.js';
 
 const weather: WeatherSnapshot = {
   condition: 'Cloudy',
@@ -24,6 +25,22 @@ const weather: WeatherSnapshot = {
   air_quality_region: 'central',
   forecast_periods: [{ label: 'Now', forecast: 'Cloudy' }],
   daily_forecast: [{ date: '2026-05-04', forecast: 'Cloudy', temperature_low_c: 25, temperature_high_c: 32 }],
+};
+
+const twoHourForecastPayload = {
+  code: 0,
+  data: {
+    area_metadata: [
+      { name: 'Bishan', label_location: { latitude: 1.350772, longitude: 103.839 } },
+    ],
+    items: [
+      {
+        update_timestamp: '2026-08-28T15:36:24+08:00',
+        valid_period: { text: '3.30 pm to 5.30 pm' },
+        forecasts: [{ area: 'Bishan', forecast: 'Windy' }],
+      },
+    ],
+  },
 };
 
 describe('locations API', () => {
@@ -73,5 +90,34 @@ describe('locations API', () => {
     const listResponse = await request(app).get('/api/locations').expect(200);
     expect(listResponse.body.locations).toHaveLength(1);
     expect(listResponse.body.locations[0].weather.condition).toBe('Cloudy');
+  });
+
+  it('deletes an existing location', async () => {
+    const createResponse = await request(app)
+      .post('/api/locations')
+      .send({ latitude: 1.4, longitude: 103.9 })
+      .expect(201);
+
+    await request(app).delete(`/api/locations/${createResponse.body.id}`).expect(204);
+    expect((await request(app).get('/api/locations').expect(200)).body.locations).toHaveLength(1);
+    await request(app).get(`/api/locations/${createResponse.body.id}`).expect(404);
+  });
+
+  it('returns not found when deleting an unknown location', async () => {
+    await request(app).delete('/api/locations/999').expect(404);
+  });
+});
+
+describe('two-hour forecast mapping', () => {
+  it('maps the nearest area forecast into a condition snapshot', () => {
+    const client = new SingaporeWeatherClient();
+    const snapshot = client.snapshotFromPayload(twoHourForecastPayload, 1.35, 103.84);
+
+    expect(snapshot).toMatchObject({
+      condition: 'Windy',
+      area: 'Bishan',
+      valid_period_text: '3.30 pm to 5.30 pm',
+      source: 'api-open.data.gov.sg',
+    });
   });
 });

@@ -1,5 +1,5 @@
 import { useStore } from '../state/store';
-import { CloudIcon, HomeIcon } from './icons';
+import { CloseIcon, CloudIcon, HomeIcon } from './icons';
 import { formatTemperature, formatTime } from './format';
 import type { KeyboardEvent } from 'react';
 import type { Location } from '../types';
@@ -10,7 +10,7 @@ interface SidebarCardProps {
 }
 
 export function SidebarCard({ location, isHome }: SidebarCardProps) {
-  const { selectedId, select } = useStore();
+  const { selectedId, select, delete: remove } = useStore();
   const isSelected = selectedId === location.id;
   const observed = formatTime(location.weather.observed_at);
   const area =
@@ -21,6 +21,9 @@ export function SidebarCard({ location, isHome }: SidebarCardProps) {
   const low = formatTemperature(location.weather.forecast_low_c);
 
   const onSelect = () => select(location.id);
+  const onDelete = () => {
+    if (window.confirm(`Remove ${area}?`)) void remove(location.id);
+  };
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.target !== event.currentTarget) return;
     if (event.key === 'Enter' || event.key === ' ') {
@@ -41,7 +44,18 @@ export function SidebarCard({ location, isHome }: SidebarCardProps) {
           : 'border-white/10 bg-white/[0.07] hover:bg-white/[0.12]'
       }`}
     >
-      <div className="flex items-start justify-between gap-3 px-4 pt-3">
+      <button
+        type="button"
+        onClick={(event) => {
+          event.stopPropagation();
+          onDelete();
+        }}
+        aria-label={`Remove ${area}`}
+        className="absolute right-2 top-2 rounded-full p-1 text-white/60 hover:bg-white/10 hover:text-white"
+      >
+        <CloseIcon className="h-3.5 w-3.5" />
+      </button>
+      <div className="flex items-start justify-between gap-3 px-4 pt-3 pr-12">
         <div className="min-w-0">
           <div className="truncate text-lg font-semibold leading-tight text-white">{area}</div>
           <div className="mt-0.5 flex items-center gap-1.5 text-[11px] text-white/70">

@@ -1,3 +1,5 @@
+@import 'leaflet/dist/leaflet.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -40,4 +42,52 @@ input:focus-visible {
 
 ::-webkit-scrollbar-track {
   background: transparent;
+}
+
+.weather-map-label {
+  border: 0 !important;
+  border-radius: 9999px !important;
+  background: rgba(35, 52, 72, 0.88) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22) !important;
+  color: white !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 3px 7px !important;
+}
+
+.weather-map-label::before {
+  border-top-color: rgba(35, 52, 72, 0.88) !important;
+}
+
+.weather-map-label-selected {
+  background: #1677d2 !important;
+}
+
+.weather-map-label-selected::before {
+  border-top-color: #1677d2 !important;
+}
+
+.weather-map-pin {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border: 3px solid white;
+  border-radius: 50%;
+  background: #4a90d9;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.35);
+}
+
+.weather-map-pin-selected {
+  background: #1677d2;
+  box-shadow: 0 0 0 4px rgba(22, 119, 210, 0.3), 0 2px 7px rgba(0, 0, 0, 0.35);
+}
+
+.leaflet-container {
+  background: #b8c9d4;
+  font-family: inherit;
+}
+
+.leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-radius: 4px 0 0;
 }

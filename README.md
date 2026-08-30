@@ -68,6 +68,7 @@ npm run db:migrate  # Apply Drizzle migrations to backend/weather.db
 | `GET`  | `/api/locations`             | List all locations             |
 | `POST` | `/api/locations`             | Create a location              |
 | `GET`  | `/api/locations/:id`         | Get a single location          |
+| `DELETE` | `/api/locations/:id`       | Delete a location              |
 | `POST` | `/api/locations/:id/refresh` | Refresh weather for a location |
 
 Create a location:
@@ -158,9 +159,9 @@ npm run dev
 
 These tasks are ordered from easiest to hardest. Each one builds on the existing codebase and introduces new concepts progressively. File names may differ by implementation, but the product behavior should stay the same.
 
-### 1. Delete a location
+### 1. Delete a location (implemented)
 
-Add a `DELETE /api/locations/:id` endpoint and a delete button to each card in `SidebarCard.tsx`.
+Delete saved locations with the `DELETE /api/locations/:id` endpoint or the cross button on each `SidebarCard.tsx`.
 
 | Layer    | What to do                              |
 | -------- | --------------------------------------- |
@@ -186,9 +187,9 @@ Replace the manual lat/lon inputs with a searchable dropdown. The 2-hour forecas
 | Frontend     | Replace lat/lon fields with a searchable select/autocomplete populated from `area_metadata` |
 | External API | `GET /v2/real-time/api/two-hr-forecast` -> `area_metadata` array                            |
 
-### 4. Current conditions detail
+### 4. Current conditions detail (implemented)
 
-Show temperature, humidity, and rainfall alongside the forecast condition. These endpoints share the same general station-reading pattern with coordinates.
+Show temperature, humidity, and rainfall alongside the forecast condition. The refresh flow fetches and persists these readings for each saved location.
 
 | Layer        | What to do                                                                                                           |
 | ------------ | -------------------------------------------------------------------------------------------------------------------- |
@@ -206,9 +207,9 @@ Add a scrollable hourly timeline and a 4-day daily forecast below each location'
 | Frontend     | Horizontally scrollable hourly row plus vertical daily list, each showing condition text/icons and temperature ranges |
 | External API | `GET /v1/environment/24-hour-weather-forecast`, `GET /v1/environment/4-day-weather-forecast`                          |
 
-### 6. Wind and atmospheric readings
+### 6. Wind and atmospheric readings (implemented)
 
-Add a wind and atmosphere section showing wind speed and direction. Display wind as a compass arrow or animated indicator.
+The dashboard displays wind speed and direction, with the refresh flow fetching and persisting both readings.
 
 | Layer        | What to do                                                                      |
 | ------------ | ------------------------------------------------------------------------------- |
