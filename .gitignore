@@ -30,7 +30,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Editors
-.vscode/
+# .vscode/
 .idea/
 .claude/
 .mise.toml

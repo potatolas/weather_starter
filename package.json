@@ -34,6 +34,7 @@
     "@types/leaflet": "^1.9.21",
     "@types/node": "^22.10.2",
     "@types/supertest": "^7.2.0",
+    "better-sqlite3": "^13.0.3",
     "drizzle-kit": "^0.31.10",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
@@ -41,11 +42,15 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.6.0",
     "husky": "^9.1.7",
+    "mcp-sqlite": "^1.0.9",
     "prettier": "3.8.3",
     "supertest": "^7.2.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.59.2",
     "vitest": "^4.1.5"
+  },
+  "allowScripts": {
+    "sqlite3@5.1.7": true
   }
 }
