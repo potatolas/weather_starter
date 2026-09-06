@@ -19,15 +19,15 @@ export function Sidebar() {
   }, [locations, query]);
 
   return (
-    <aside className="flex w-[22rem] shrink-0 flex-col gap-3 border-r border-white/5 bg-black/20 p-4 backdrop-blur-2xl">
+    <aside className="flex w-[22rem] shrink-0 flex-col gap-3 border-r border-[rgb(var(--ct-sidebar-border)/var(--ct-sidebar-border-o))] bg-[rgb(var(--ct-sidebar-bg)/var(--ct-sidebar-bg-o))] p-4 backdrop-blur-2xl">
       <div className="relative">
-        <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" />
+        <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[rgb(var(--ct-text-muted)/var(--ct-text-faint-o))]" />
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search"
-          className="w-full rounded-lg border border-white/10 bg-white/[0.08] py-2 pl-9 pr-3 text-sm text-white placeholder:text-white/50"
+          className="w-full rounded-lg border border-[rgb(var(--ct-input-border)/var(--ct-input-border-o))] bg-[rgb(var(--ct-input-bg)/var(--ct-input-bg-o))] py-2 pl-9 pr-3 text-sm text-[rgb(var(--ct-text-primary)/var(--ct-text-primary-o))] placeholder:text-[rgb(var(--ct-text-muted)/var(--ct-text-faint-o))]"
         />
       </div>
 
@@ -35,15 +35,15 @@ export function Sidebar() {
 
       <div className="flex flex-col gap-2 overflow-y-auto pr-1">
         {isLoading && locations.length === 0 ? (
-          <p className="rounded-2xl border border-white/10 bg-white/[0.06] p-4 text-sm text-white/70">
+          <p className="rounded-2xl border border-[rgb(var(--ct-card-border)/var(--ct-card-border-o))] bg-[rgb(var(--ct-card-bg)/var(--ct-card-bg-o))] p-4 text-sm text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">
             Loading locations…
           </p>
         ) : filtered.length === 0 && locations.length > 0 ? (
-          <p className="rounded-2xl border border-white/10 bg-white/[0.06] p-4 text-center text-sm text-white/60">
+          <p className="rounded-2xl border border-[rgb(var(--ct-card-border)/var(--ct-card-border-o))] bg-[rgb(var(--ct-card-bg)/var(--ct-card-bg-o))] p-4 text-center text-sm text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">
             No matches
           </p>
         ) : filtered.length === 0 ? (
-          <p className="rounded-2xl border border-dashed border-white/15 bg-white/[0.04] p-6 text-center text-sm text-white/60">
+          <p className="rounded-2xl border border-dashed border-[rgb(var(--ct-card-border)/var(--ct-card-border-o))] bg-[rgb(var(--ct-card-bg)/0.04)] p-6 text-center text-sm text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">
             No locations yet. Add one above.
           </p>
         ) : (
