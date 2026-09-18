@@ -55,7 +55,9 @@ export function AddLocationForm() {
       </p>
       <div className="grid grid-cols-2 gap-2">
         <label className="grid gap-1">
-          <span className="text-[11px] text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">Latitude</span>
+          <span className="text-[11px] text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">
+            Latitude
+          </span>
           <input
             type="number"
             step="any"
@@ -67,7 +69,9 @@ export function AddLocationForm() {
           />
         </label>
         <label className="grid gap-1">
-          <span className="text-[11px] text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">Longitude</span>
+          <span className="text-[11px] text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">
+            Longitude
+          </span>
           <input
             type="number"
             step="any"

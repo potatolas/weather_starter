@@ -1,6 +1,6 @@
 ---
 description: Instructions for frontend code in the frontend/ directory
-applyTo: "frontend/**"
+applyTo: 'frontend/**'
 ---
 
 You are working on the frontend of this project.

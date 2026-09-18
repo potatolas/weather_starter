@@ -16,7 +16,7 @@ export function StoreProvider({ children }: ProviderProps) {
   const [isAdding, setIsAdding] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshingId, setRefreshingId] = useState<number | null>(null);
-  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [, setDeletingId] = useState<number | null>(null);
   const [error, setError] = useState<unknown>(null);
 
   const load = useCallback(async (): Promise<Location[]> => {

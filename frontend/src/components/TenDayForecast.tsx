@@ -74,7 +74,9 @@ export function TenDayForecast({ weather }: TenDayForecastProps) {
                 key={day.date}
                 className="grid grid-cols-[5rem_2rem_3rem_1fr_3rem] items-center gap-3 px-4 py-3 text-sm"
               >
-                <span className="font-medium text-[rgb(var(--ct-text-primary)/0.95)]">{labelForDate(day.date, index)}</span>
+                <span className="font-medium text-[rgb(var(--ct-text-primary)/0.95)]">
+                  {labelForDate(day.date, index)}
+                </span>
                 <CloudIcon className="h-5 w-5 text-[rgb(var(--ct-text-secondary)/0.80)]" />
                 <span className="tabular-nums text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">
                   {formatTemperature(day.temperature_low_c)}
@@ -99,7 +101,9 @@ export function TenDayForecast({ weather }: TenDayForecastProps) {
             );
           })
         ) : (
-          <li className="px-4 py-4 text-sm text-[rgb(var(--ct-text-faint)/var(--ct-text-faint-o))]">Forecast unavailable.</li>
+          <li className="px-4 py-4 text-sm text-[rgb(var(--ct-text-faint)/var(--ct-text-faint-o))]">
+            Forecast unavailable.
+          </li>
         )}
       </ul>
     </section>

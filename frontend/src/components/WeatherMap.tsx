@@ -19,7 +19,9 @@ function FitLocations({ locations }: { locations: Location[] }) {
 
   useEffect(() => {
     const points = locations
-      .filter((location) => Number.isFinite(location.latitude) && Number.isFinite(location.longitude))
+      .filter(
+        (location) => Number.isFinite(location.latitude) && Number.isFinite(location.longitude),
+      )
       .map((location) => [location.latitude, location.longitude] as [number, number]);
 
     if (points.length === 0) {

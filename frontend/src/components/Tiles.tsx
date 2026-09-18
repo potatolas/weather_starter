@@ -98,7 +98,9 @@ export function ConditionTile({ weather }: WeatherProps) {
           <CloudIcon className="h-10 w-10 text-[rgb(var(--ct-text-primary)/0.85)]" />
         )}
         <div>
-          <div className="text-3xl font-light leading-none text-[rgb(var(--ct-text-primary)/0.95)]">{condition}</div>
+          <div className="text-3xl font-light leading-none text-[rgb(var(--ct-text-primary)/0.95)]">
+            {condition}
+          </div>
           <p className="mt-2 text-xs leading-snug text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">
             {weather?.valid_period_text || 'Latest two-hour forecast'}
           </p>
@@ -118,7 +120,9 @@ export function AirQualityTile({ weather }: WeatherProps) {
       title="Air Quality"
       className="col-span-2"
     >
-      <div className="text-4xl font-light leading-none text-[rgb(var(--ct-text-primary)/0.95)]">{psi}</div>
+      <div className="text-4xl font-light leading-none text-[rgb(var(--ct-text-primary)/0.95)]">
+        {psi}
+      </div>
       <div className="mt-1 text-base text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">
         {airQualityLabel(weather?.psi_twenty_four_hourly)}
       </div>
@@ -148,12 +152,16 @@ export function WindTile({ weather }: WeatherProps) {
             className={`flex justify-between ${hasDirection ? 'border-b border-[rgb(var(--ct-divider)/var(--ct-divider-o))] pb-2' : ''}`}
           >
             <span className="text-[rgb(var(--ct-text-muted)/0.75)]">Wind</span>
-            <span className="tabular-nums text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">{speed} km/h</span>
+            <span className="tabular-nums text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">
+              {speed} km/h
+            </span>
           </li>
           {hasDirection && (
             <li className="flex justify-between">
               <span className="text-[rgb(var(--ct-text-muted)/0.75)]">Direction</span>
-              <span className="tabular-nums text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">{direction}&deg;</span>
+              <span className="tabular-nums text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">
+                {direction}&deg;
+              </span>
             </li>
           )}
         </ul>
@@ -173,7 +181,9 @@ function Compass({ speed, direction }: CompassProps) {
 
   return (
     <div className="relative h-20 w-20 rounded-full border border-[rgb(var(--ct-card-border)/0.20)] bg-[rgb(var(--ct-card-bg)/0.04)]">
-      <span className="absolute left-1/2 top-1 -translate-x-1/2 text-[10px] text-[rgb(var(--ct-text-faint)/var(--ct-text-faint-o))]">N</span>
+      <span className="absolute left-1/2 top-1 -translate-x-1/2 text-[10px] text-[rgb(var(--ct-text-faint)/var(--ct-text-faint-o))]">
+        N
+      </span>
       <span className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[10px] text-[rgb(var(--ct-text-faint)/var(--ct-text-faint-o))]">
         E
       </span>
@@ -190,8 +200,12 @@ function Compass({ speed, direction }: CompassProps) {
         />
       )}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-base font-light leading-none text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">{speed}</span>
-        <span className="text-[10px] text-[rgb(var(--ct-text-faint)/var(--ct-text-faint-o))]">km/h</span>
+        <span className="text-base font-light leading-none text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">
+          {speed}
+        </span>
+        <span className="text-[10px] text-[rgb(var(--ct-text-faint)/var(--ct-text-faint-o))]">
+          km/h
+        </span>
       </div>
     </div>
   );
@@ -212,13 +226,17 @@ export function UVTile({ weather }: WeatherProps) {
       <div className="text-4xl font-light leading-none text-[rgb(var(--ct-text-primary)/0.95)]">
         {formatNumber(weather?.uv_index)}
       </div>
-      <div className="mt-1 text-base text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">{uvLabel(weather?.uv_index)}</div>
+      <div className="mt-1 text-base text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">
+        {uvLabel(weather?.uv_index)}
+      </div>
       <ScaleBar
         value={weather?.uv_index}
         max={11}
         gradientClass="bg-gradient-to-r from-emerald-400 via-yellow-300 via-orange-400 to-fuchsia-500"
       />
-      <p className="mt-3 text-xs leading-snug text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">Latest nationwide UVI reading.</p>
+      <p className="mt-3 text-xs leading-snug text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">
+        Latest nationwide UVI reading.
+      </p>
     </TileShell>
   );
 }
@@ -242,8 +260,12 @@ export function PrecipitationTile({ weather }: WeatherProps) {
       <div className="text-4xl font-light leading-none tabular-nums text-[rgb(var(--ct-text-primary)/0.95)]">
         {formatNumber(weather?.rainfall_mm, 1)} mm
       </div>
-      <div className="mt-1 text-sm text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">Latest reading</div>
-      <p className="mt-3 text-xs leading-snug text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">Nearest realtime rainfall station.</p>
+      <div className="mt-1 text-sm text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">
+        Latest reading
+      </div>
+      <p className="mt-3 text-xs leading-snug text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">
+        Nearest realtime rainfall station.
+      </p>
     </TileShell>
   );
 }
@@ -254,7 +276,9 @@ export function HumidityTile({ weather }: WeatherProps) {
       <div className="text-4xl font-light leading-none tabular-nums text-[rgb(var(--ct-text-primary)/0.95)]">
         {formatNumber(weather?.humidity_percent)}%
       </div>
-      <p className="mt-3 text-xs leading-snug text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">Nearest realtime humidity station.</p>
+      <p className="mt-3 text-xs leading-snug text-[rgb(var(--ct-text-muted)/var(--ct-text-muted-o))]">
+        Nearest realtime humidity station.
+      </p>
     </TileShell>
   );
 }

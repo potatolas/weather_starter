@@ -59,13 +59,17 @@ export function HourlyStrip({ periods = [] }: HourlyStripProps) {
           const isFair = slot.forecast?.toLowerCase().includes('fair');
           return (
             <div key={slot.key} className="flex flex-col items-center gap-2 px-2 py-4 text-center">
-              <div className="text-xs font-medium text-[rgb(var(--ct-text-primary)/0.85)]">{slot.label}</div>
+              <div className="text-xs font-medium text-[rgb(var(--ct-text-primary)/0.85)]">
+                {slot.label}
+              </div>
               {isFair ? (
                 <SunIcon className="h-7 w-7 text-amber-400" />
               ) : (
                 <CloudIcon className="h-7 w-7 text-[rgb(var(--ct-text-primary)/0.85)]" />
               )}
-              <div className="text-xs leading-snug text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">{slot.forecast}</div>
+              <div className="text-xs leading-snug text-[rgb(var(--ct-text-secondary)/var(--ct-text-secondary-o))]">
+                {slot.forecast}
+              </div>
             </div>
           );
         })}

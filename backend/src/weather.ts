@@ -622,7 +622,6 @@ function fulfilled<T>(result: PromiseSettledResult<T>): T | null {
   return result.status === 'fulfilled' ? result.value : null;
 }
 
-
 function defaultRegions(): RegionMetadata[] {
   return [
     { name: 'west', labelLocation: { latitude: 1.35735, longitude: 103.7 } },

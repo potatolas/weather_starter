@@ -1,6 +1,6 @@
 ---
 description: Instructions for backend code in the backend/ directory
-applyTo: "backend/**"
+applyTo: 'backend/**'
 ---
 
 You are working on the backend of this project.

@@ -24,15 +24,15 @@ const weather: WeatherSnapshot = {
   pm25_one_hourly: 9,
   air_quality_region: 'central',
   forecast_periods: [{ label: 'Now', forecast: 'Cloudy' }],
-  daily_forecast: [{ date: '2026-05-04', forecast: 'Cloudy', temperature_low_c: 25, temperature_high_c: 32 }],
+  daily_forecast: [
+    { date: '2026-05-04', forecast: 'Cloudy', temperature_low_c: 25, temperature_high_c: 32 },
+  ],
 };
 
 const twoHourForecastPayload = {
   code: 0,
   data: {
-    area_metadata: [
-      { name: 'Bishan', label_location: { latitude: 1.350772, longitude: 103.839 } },
-    ],
+    area_metadata: [{ name: 'Bishan', label_location: { latitude: 1.350772, longitude: 103.839 } }],
     items: [
       {
         update_timestamp: '2026-08-28T15:36:24+08:00',

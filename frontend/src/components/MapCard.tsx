@@ -47,7 +47,10 @@ export function MapCard() {
             className="flex h-full w-full max-w-7xl flex-col overflow-hidden rounded-3xl border border-[rgb(var(--ct-card-border)/0.20)] bg-slate-800/90 shadow-2xl"
           >
             <div className="flex items-center justify-between px-5 py-4">
-              <h2 id="fullscreen-map-title" className="flex items-center gap-2 font-medium text-white/95">
+              <h2
+                id="fullscreen-map-title"
+                className="flex items-center gap-2 font-medium text-white/95"
+              >
                 <MapIcon className="h-4 w-4 text-white/70" />
                 Weather map
               </h2>
