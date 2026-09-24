@@ -56,6 +56,7 @@ export interface StoreValue {
   select: (id: number | null) => void;
   setAdding: (isAdding: boolean) => void;
   create: (payload: CreateLocationPayload) => Promise<void>;
+  createOrSelect: (payload: CreateLocationPayload) => Promise<void>;
   refresh: (id: number) => Promise<void>;
   delete: (id: number) => Promise<void>;
 }

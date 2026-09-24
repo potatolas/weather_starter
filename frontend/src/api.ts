@@ -10,6 +10,13 @@ interface ApiError {
   detail?: string;
 }
 
+export class DuplicateLocationError extends Error {
+  constructor(message = 'Location already exists') {
+    super(message);
+    this.name = 'DuplicateLocationError';
+  }
+}
+
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const response = await fetch(`${API_BASE}${endpoint}`, {
     headers: { 'Content-Type': 'application/json', ...options.headers },
@@ -17,6 +24,7 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
   });
   if (!response.ok) {
     const error = (await response.json().catch(() => ({}))) as ApiError;
+    if (response.status === 409) throw new DuplicateLocationError(error.detail);
     throw new Error(error.detail || 'Request failed');
   }
   if (response.status === 204) return null as T;

@@ -13,7 +13,7 @@ const child = spawn(
     env: {
       ...process.env,
       NODE_OPTIONS: nodeOptions,
-      PORTLESS_HTTPS: process.env.PORTLESS_HTTPS ?? '0',
+      PORTLESS_HTTPS: process.env.PORTLESS_HTTPS ?? '1',
       PORTLESS_PORT: process.env.PORTLESS_PORT ?? '1355',
     },
   },

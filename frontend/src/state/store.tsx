@@ -5,6 +5,7 @@ import {
   deleteLocation,
   refreshLocation,
   logInteraction,
+  DuplicateLocationError,
 } from '../api';
 import type { CreateLocationPayload, Location, ProviderProps, StoreValue } from '../types';
 
@@ -73,6 +74,30 @@ export function StoreProvider({ children }: ProviderProps) {
     [load],
   );
 
+  const createOrSelect = useCallback(
+    async (payload: CreateLocationPayload) => {
+      try {
+        await create(payload);
+      } catch (err) {
+        if (!(err instanceof DuplicateLocationError)) throw err;
+        // Location already exists — reload and silently select the matching one.
+        const next = await load();
+        const existing = next.find(
+          (l) => l.latitude === payload.latitude && l.longitude === payload.longitude,
+        );
+        if (existing) {
+          setSelectedId(existing.id);
+          setIsAdding(false);
+          setError(null);
+          logInteraction('location_use_my_location_duplicate_selected', {
+            locationId: existing.id,
+          });
+        }
+      }
+    },
+    [create, load],
+  );
+
   const refresh = useCallback(
     async (id: number) => {
       setRefreshingId(id);
@@ -131,6 +156,7 @@ export function StoreProvider({ children }: ProviderProps) {
       if (nextIsAdding) logInteraction('location_form_opened');
     },
     create,
+    createOrSelect,
     refresh,
     delete: remove,
   };
